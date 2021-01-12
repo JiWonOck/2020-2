@@ -2,60 +2,60 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define MAX 15				// Áö¿ª ÃÖ´ë ¼ö(Location ¼ö) 
-#define TRUE 1				// TRUE´Â 1·Î ÁöÁ¤ 
-#define FALSE 0				// FALSE´Â 0À¸·Î ÁöÁ¤ 
-#define LOOP 10000			// ¹«ÇÑ´ë(LOOP)´Â 10000À¸·Î ¼³Á¤ 
-#define strMAX 10			// Áö¿ª ÀÌ¸§ ÃÖ´ë ±æÀÌ 
+#define MAX 15				// ì§€ì—­ ìµœëŒ€ ìˆ˜(Location ìˆ˜) 
+#define TRUE 1				// TRUEëŠ” 1ë¡œ ì§€ì • 
+#define FALSE 0				// FALSEëŠ” 0ìœ¼ë¡œ ì§€ì • 
+#define LOOP 10000			// ë¬´í•œëŒ€(LOOP)ëŠ” 10000ìœ¼ë¡œ ì„¤ì • 
+#define strMAX 10			// ì§€ì—­ ì´ë¦„ ìµœëŒ€ ê¸¸ì´ 
 
-typedef struct fast{		// Dijkstra Å×ÀÌºí »ı¼º¿ë ±¸Á¶Ã¼ 
-	int fast_long[MAX];		// ÃÖ´Ü °Å¸® 
-	int fast_way[MAX];		// ÃÖ´Ü°æ·ÎÁß µµÂø Location ¹Ù·Î ÀÌÀü À§Ä¡ 
+typedef struct fast{		// Dijkstra í…Œì´ë¸” ìƒì„±ìš© êµ¬ì¡°ì²´ 
+	int fast_long[MAX];		// ìµœë‹¨ ê±°ë¦¬ 
+	int fast_way[MAX];		// ìµœë‹¨ê²½ë¡œì¤‘ ë„ì°© Location ë°”ë¡œ ì´ì „ ìœ„ì¹˜ 
 }FAST;
 
-char name[MAX][strMAX]={"¼­¿ï","ÀÎÃµ","Ãµ¾È","º¸·É","±º»ê",			//0~4¹ø µµ½Ã ÀÌ¸§ 
-						"¸ñÆ÷","±¤ÁÖ","³í»ê","°øÁÖ","´ëÀü",			//5~9¹ø µµ½Ã ÀÌ¸§ 
-						"´ë±¸","¼ÓÃÊ","µ¿ÇØ","Æ÷Ç×","ºÎ»ê"};	//10~14¹ø µµ½Ã ÀÌ¸§ 
+char name[MAX][strMAX]={"ì„œìš¸","ì¸ì²œ","ì²œì•ˆ","ë³´ë ¹","êµ°ì‚°",		//0~4ë²ˆ ë„ì‹œ ì´ë¦„ 
+			"ëª©í¬","ê´‘ì£¼","ë…¼ì‚°","ê³µì£¼","ëŒ€ì „",		//5~9ë²ˆ ë„ì‹œ ì´ë¦„ 
+			"ëŒ€êµ¬","ì†ì´ˆ","ë™í•´","í¬í•­","ë¶€ì‚°"};		//10~14ë²ˆ ë„ì‹œ ì´ë¦„ 
 
-void creat_dijkstra(FAST *, int);			// Dijkstra Å×ÀÌºí »ı¼º 
-void find_way(FAST *,int, int);				// ÃÖ´Ü°æ·Î ¿ªÃßÀû 
+void creat_dijkstra(FAST *, int);			// Dijkstra í…Œì´ë¸” ìƒì„± 
+void find_way(FAST *,int, int);				// ìµœë‹¨ê²½ë¡œ ì—­ì¶”ì  
 
-/********** ±âº» ÀÔ·Â ¹× Dijkstra Å×ÀÌºí ±¸Á¶Ã¼ ¼±¾ğ **********/ 
+/********** ê¸°ë³¸ ì…ë ¥ ë° Dijkstra í…Œì´ë¸” êµ¬ì¡°ì²´ ì„ ì–¸ **********/ 
 int main(){
-	FAST fastSet;							// Dijkstra Å×ÀÌºí ¼±¾ğ 
-	int start, end;							// ½ÃÀÛ À§Ä¡, µµÂø À§Ä¡ (¼öÄ¡) 
-	int i;							// ¹İº¹¹® ¿ë ÀÓ½Ã º¯¼ö ¼±¾ğ 
+	FAST fastSet;							// Dijkstra í…Œì´ë¸” ì„ ì–¸ 
+	int start, end;							// ì‹œì‘ ìœ„ì¹˜, ë„ì°© ìœ„ì¹˜ (ìˆ˜ì¹˜) 
+	int i;							// ë°˜ë³µë¬¸ ìš© ì„ì‹œ ë³€ìˆ˜ ì„ ì–¸ 
 	char str[100], *strStart, *strEnd;
 	
 	while(gets(str)!=NULL) {	
 		strStart=strtok(str," ");
 		strEnd=strtok(NULL," ");
 			
-			/***** Exception È®ÀÎ *****/ 
+			/***** Exception í™•ì¸ *****/ 
 			for(i=0;i<MAX;i++){
 				if(!strcmp(name[i], strStart)){
-					start=i;					// Ãâ¹ß À§Ä¡(¼öÄ¡) ÀÔ·Â 
+					start=i;					// ì¶œë°œ ìœ„ì¹˜(ìˆ˜ì¹˜) ì…ë ¥ 
 					break;
 				} 
 			}
 
-			/***** Exception È®ÀÎ *****/ 
+			/***** Exception í™•ì¸ *****/ 
 			for(i=0;i<MAX;i++){
 				if(!strcmp(name[i],strEnd)){
-					end=i;						// µµÂø À§Ä¡(¼öÄ¡) ÀÔ·Â 
+					end=i;						// ë„ì°© ìœ„ì¹˜(ìˆ˜ì¹˜) ì…ë ¥ 
 					break;
 				} 
 			}				
 
-		/***** Exception È®ÀÎ *****/ 
-		if(start!=end){							// Ãâ¹ß,µµÂø Áö¿ªÀÌ ´Ù¸¥ °æ¿ì 
-			creat_dijkstra(&fastSet,start);		// Dijkstra Å×ÀÌºí »ı¼º  
-			// µµÂøÁö¿ª¿¡ ´ëÇÑ ÃÖ´Ü°Å¸® Ãâ·Â 
-			printf("ÃÖ´Ü°Å¸® %dkm ",fastSet.fast_long[end]);
-			find_way(&fastSet,start,end);  		// ÃÖ´Ü°æ·Î Ãâ·Â			
+		/***** Exception í™•ì¸ *****/ 
+		if(start!=end){							// ì¶œë°œ,ë„ì°© ì§€ì—­ì´ ë‹¤ë¥¸ ê²½ìš° 
+			creat_dijkstra(&fastSet,start);		// Dijkstra í…Œì´ë¸” ìƒì„±  
+			// ë„ì°©ì§€ì—­ì— ëŒ€í•œ ìµœë‹¨ê±°ë¦¬ ì¶œë ¥ 
+			printf("ìµœë‹¨ê±°ë¦¬ %dkm ",fastSet.fast_long[end]);
+			find_way(&fastSet,start,end);  		// ìµœë‹¨ê²½ë¡œ ì¶œë ¥			
 		}
-		else{									// Ãâ¹ß, µµÂø Áö¿ªÀÌ °°Àº °æ¿ì 
-			printf("  [ERR] °°Àº Àå¼Ò´Â °¥¼ö ¾ø½À´Ï´Ù.\n");
+		else{									// ì¶œë°œ, ë„ì°© ì§€ì—­ì´ ê°™ì€ ê²½ìš° 
+			printf("  [ERR] ê°™ì€ ì¥ì†ŒëŠ” ê°ˆìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
 		}
 	}
 	return 0;
@@ -63,9 +63,9 @@ int main(){
 
 
 
-/********** Dijkstra Å×ÀÌºí »ı¼º **********/ 
+/********** Dijkstra í…Œì´ë¸” ìƒì„± **********/ 
 void creat_dijkstra(FAST *fastSet, int start){
-	/***** ±âº» Áö¿ª Á¤º¸ *****/ 
+	/***** ê¸°ë³¸ ì§€ì—­ ì •ë³´ *****/ 
 	int location[MAX][MAX]={
 		0, 26, 83, LOOP, LOOP, LOOP, LOOP, LOOP, LOOP, 138, LOOP, 152, LOOP, LOOP, LOOP ,
 		26, 0, LOOP, 124, LOOP, LOOP, LOOP, LOOP, LOOP ,LOOP ,LOOP ,LOOP ,LOOP ,LOOP ,LOOP ,
@@ -87,67 +87,67 @@ void creat_dijkstra(FAST *fastSet, int start){
 	int visited[MAX],next,temp;
 	int i, j, k;
 	
-	/***** º¯¼ö ÃÊ±âÈ­ *****/ 
+	/***** ë³€ìˆ˜ ì´ˆê¸°í™” *****/ 
 	for(i=0;i<MAX;i++){
-		visited[i]=0;				// ¹æ¹®ÇÑ Áö¿ª º¯¼ö 
-		fastSet->fast_way[i]=start;	// ÃÖ´Ü°æ·ÎÁß µµÂø Location ¹Ù·Î ÀÌÀü À§Ä¡ 
+		visited[i]=0;				// ë°©ë¬¸í•œ ì§€ì—­ ë³€ìˆ˜ 
+		fastSet->fast_way[i]=start;	// ìµœë‹¨ê²½ë¡œì¤‘ ë„ì°© Location ë°”ë¡œ ì´ì „ ìœ„ì¹˜ 
 	}
-	next=start;						// ½ÃÀÛ Áö¿ª ÀÔ·ÂÈÄ Å×ÀÌºí »ı¼º (Ã³À½ ½ÃÀÛ À§Ä¡) 
+	next=start;						// ì‹œì‘ ì§€ì—­ ì…ë ¥í›„ í…Œì´ë¸” ìƒì„± (ì²˜ìŒ ì‹œì‘ ìœ„ì¹˜) 
 	
-	/***** Dijstra Å×ÀÌºí »ı¼º *****/
+	/***** Dijstra í…Œì´ë¸” ìƒì„± *****/
 	for(i=0;i<MAX;i++){				
 		for(j=0;j<MAX;j++){
-			/***** Ã¹ ÃÖ´Ü°æ·Î Å×ÀÌºí °ªÀ» ½ÃÀÛÀ§Ä¡¿¡¼­ÀÇ °ªÀ¸·Î ÀÔ·Â *****/ 
+			/***** ì²« ìµœë‹¨ê²½ë¡œ í…Œì´ë¸” ê°’ì„ ì‹œì‘ìœ„ì¹˜ì—ì„œì˜ ê°’ìœ¼ë¡œ ì…ë ¥ *****/ 
 			if(i==0){
-				fastSet->fast_long[j]=location[start][j];	// ½ÃÀÛÀ§Ä¡¿¡¼­ÀÇ °ª ÀÔ·Â 
-				visited[start]=TRUE;						// ½ÃÀÛÀ§Ä¡ ¹æ¹® Ã³¸® 
+				fastSet->fast_long[j]=location[start][j];	// ì‹œì‘ìœ„ì¹˜ì—ì„œì˜ ê°’ ì…ë ¥ 
+				visited[start]=TRUE;						// ì‹œì‘ìœ„ì¹˜ ë°©ë¬¸ ì²˜ë¦¬ 
 			}
 			else{
-				// »õ·Î Ã£Àº °Å¸®°¡ ÇöÀç °Å¸®º¸´Ù °¡±î¿î °æ¿ì °ª º¯°æ 
+				// ìƒˆë¡œ ì°¾ì€ ê±°ë¦¬ê°€ í˜„ì¬ ê±°ë¦¬ë³´ë‹¤ ê°€ê¹Œìš´ ê²½ìš° ê°’ ë³€ê²½ 
 				if((fastSet->fast_long[j])>(fastSet->fast_long[next]+location[next][j])){
-					// »õ·Î Ã£Àº °Å¸® ÀÔ·Â 
+					// ìƒˆë¡œ ì°¾ì€ ê±°ë¦¬ ì…ë ¥ 
 					fastSet->fast_long[j]=fastSet->fast_long[next]+location[next][j];
-					// »õ·Î Ã£Àº Áö¿ª(°¡±î¿î ³ëµå ¹Ù·Î ÀÌÀü Áö¿ª À§Ä¡ ÀÔ·Â)
+					// ìƒˆë¡œ ì°¾ì€ ì§€ì—­(ê°€ê¹Œìš´ ë…¸ë“œ ë°”ë¡œ ì´ì „ ì§€ì—­ ìœ„ì¹˜ ì…ë ¥)
 					fastSet->fast_way[j]=next;
 				}
 			}
 		}
-		temp=LOOP;		// ºñ±³¿ë º¯¼ö LOOP·Î ÃÊ±âÈ­ 
+		temp=LOOP;		// ë¹„êµìš© ë³€ìˆ˜ LOOPë¡œ ì´ˆê¸°í™” 
 
 		for(k=0;k<MAX;k++){
-			/***** ¹æ¹®ÇÏÁö ¾ÊÀº Áö¿ªÁß °¡Àå temp(´Ù¸¥ Áö¿ª °ª)º¸´Ù ÀÛÀº °æ¿ì *****/ 
+			/***** ë°©ë¬¸í•˜ì§€ ì•Šì€ ì§€ì—­ì¤‘ ê°€ì¥ temp(ë‹¤ë¥¸ ì§€ì—­ ê°’)ë³´ë‹¤ ì‘ì€ ê²½ìš° *****/ 
 			if((temp>fastSet->fast_long[k])&&(visited[k]==FALSE)){
-				temp=fastSet->fast_long[k];		// ÀÛÀº °Å¸® °ª ÀÔ·Â 
-				next=k;							// ´ÙÀ½ ÀÌµ¿ÇÒ Áö¿ª ÀÔ·Â 
+				temp=fastSet->fast_long[k];		// ì‘ì€ ê±°ë¦¬ ê°’ ì…ë ¥ 
+				next=k;							// ë‹¤ìŒ ì´ë™í•  ì§€ì—­ ì…ë ¥ 
 			}
 		}
-		visited[next]=TRUE;						// ´ÙÀ½ ÀÌµ¿ÇÒ Áö¿ª ¹æ¹®À¸·Î Ã³¸® 
+		visited[next]=TRUE;						// ë‹¤ìŒ ì´ë™í•  ì§€ì—­ ë°©ë¬¸ìœ¼ë¡œ ì²˜ë¦¬ 
 	}
 }
 
-/********** ÃÖ´Ü°æ·Î ¿ªÃßÀû **********/ 
+/********** ìµœë‹¨ê²½ë¡œ ì—­ì¶”ì  **********/ 
 void find_way(FAST *fastSet,int start,int find){
 	int i, set, way[MAX];
 	
-	printf("(ÃÖ´Ü°æ·Î: "); 
-	/***** ÃÖ´Ü°æ·Î º¯¼ö ÃÊ±âÈ­ *****/ 
-	way[0]=start;			// ½ÃÀÛ Áö¿ª(¼öÄ¡)¸¦ ¸ÇÃ³À½ ¹è¿­¿¡ »ğÀÔ 
+	printf("(ìµœë‹¨ê²½ë¡œ: "); 
+	/***** ìµœë‹¨ê²½ë¡œ ë³€ìˆ˜ ì´ˆê¸°í™” *****/ 
+	way[0]=start;			// ì‹œì‘ ì§€ì—­(ìˆ˜ì¹˜)ë¥¼ ë§¨ì²˜ìŒ ë°°ì—´ì— ì‚½ì… 
 	for(i=1;i<MAX;i++){
-		way[i]=-1;			// ¸ğµç ³ª¸ÓÁö ¹è¿­ °ªÀ» -1·Î ÃÊ±âÈ­ 
+		way[i]=-1;			// ëª¨ë“  ë‚˜ë¨¸ì§€ ë°°ì—´ ê°’ì„ -1ë¡œ ì´ˆê¸°í™” 
 	}
-	set=MAX-1;				// ¹è¿­ ÃÖ´ë°³¼ö ¼ÂÆÃ
-	/***** ¿ª¼øÀ¸·Î µÈ °æ·Î¸¦ Á¤¼øÀ¸·Î Á¤·Ä *****/ 
+	set=MAX-1;				// ë°°ì—´ ìµœëŒ€ê°œìˆ˜ ì…‹íŒ…
+	/***** ì—­ìˆœìœ¼ë¡œ ëœ ê²½ë¡œë¥¼ ì •ìˆœìœ¼ë¡œ ì •ë ¬ *****/ 
 	while(find!=start){
-		way[set]=find;		// ¹è¿­ µŞºÎºĞºÎÅÍ °æ·Î ÀÔ·Â (Á¤¼øÀ¸·Î Á¤·Ä °úÁ¤) 
-		set--;				// set -1 (µÚ¿¡¼­ ¾ÕÀ¸·Î 1Ä­ ÀÌµ¿) 
-		find=fastSet->fast_way[find];	// find¿¡ ÀÌÀüÀ§Ä¡¿¡ ´ëÇÑ °¡±î¿î °æ·Î °ª ÀÔ·Â
+		way[set]=find;		// ë°°ì—´ ë’·ë¶€ë¶„ë¶€í„° ê²½ë¡œ ì…ë ¥ (ì •ìˆœìœ¼ë¡œ ì •ë ¬ ê³¼ì •) 
+		set--;				// set -1 (ë’¤ì—ì„œ ì•ìœ¼ë¡œ 1ì¹¸ ì´ë™) 
+		find=fastSet->fast_way[find];	// findì— ì´ì „ìœ„ì¹˜ì— ëŒ€í•œ ê°€ê¹Œìš´ ê²½ë¡œ ê°’ ì…ë ¥
 	}
 	
-	/***** Á¤¼øÀ¸·Î µÈ °æ·Î¸¦ Ãâ·Â *****/ 
+	/***** ì •ìˆœìœ¼ë¡œ ëœ ê²½ë¡œë¥¼ ì¶œë ¥ *****/ 
 	for(i=0;i<MAX;i++){
-		if(way[i]!=-1){						// ¹è¿­°ªÀÌ -1ÀÌ ¾Æ´Ñ°æ¿ì¸¸ Ãâ·Â  
-			printf("%s",name[way[i]]);		// À§Ä¡°ª¿¡ ´ëÇÑ Áö¿ª ÀÌ¸§(¹®ÀÚ¿­) Ãâ·Â 
-			if(i!=(MAX-1)){					// ¸¶Áö¸· °æ·Î°¡ ¾Æ´Ñ°æ¿ì -> Ãâ·Â 
+		if(way[i]!=-1){						// ë°°ì—´ê°’ì´ -1ì´ ì•„ë‹Œê²½ìš°ë§Œ ì¶œë ¥  
+			printf("%s",name[way[i]]);		// ìœ„ì¹˜ê°’ì— ëŒ€í•œ ì§€ì—­ ì´ë¦„(ë¬¸ìì—´) ì¶œë ¥ 
+			if(i!=(MAX-1)){					// ë§ˆì§€ë§‰ ê²½ë¡œê°€ ì•„ë‹Œê²½ìš° -> ì¶œë ¥ 
 				printf(" - ");
 			} 
 		}
