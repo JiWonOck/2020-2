@@ -6,18 +6,18 @@
 #define MAX_ELEMENT 200
 #define TRUE 1
 #define FALSE 0
-#define MAX_VERTICES 15 //Á¤Á¡ÀÇ ¼ö
-#define INF	1000000	/* ¹«ÇÑ´ë (¿¬°áÀÌ ¾ø´Â °æ¿ì) */
+#define MAX_VERTICES 15 //ì •ì ì˜ ìˆ˜
+#define INF	1000000	/* ë¬´í•œëŒ€ (ì—°ê²°ì´ ì—†ëŠ” ê²½ìš°) */
 
-char *region_list[]={"ÀÎÃµ", "¼­¿ï", "¼ÓÃÊ", "º¸·É", "Ãµ¾È", "°øÁÖ", "´ëÀü", "µ¿ÇØ", "±º»ê", "³í»ê", "´ë±¸", "Æ÷Ç×", "¸ñÆ÷", "±¤ÁÖ", "ºÎ»ê"};
-int weight[MAX_VERTICES][MAX_VERTICES]={ //³×Æ®¿öÅ©ÀÇ ÀÎÁ¢ Çà·Ä
+char *region_list[]={"ì¸ì²œ", "ì„œìš¸", "ì†ì´ˆ", "ë³´ë ¹", "ì²œì•ˆ", "ê³µì£¼", "ëŒ€ì „", "ë™í•´", "êµ°ì‚°", "ë…¼ì‚°", "ëŒ€êµ¬", "í¬í•­", "ëª©í¬", "ê´‘ì£¼", "ë¶€ì‚°"};
+int weight[MAX_VERTICES][MAX_VERTICES]={ //ë„¤íŠ¸ì›Œí¬ì˜ ì¸ì ‘ í–‰ë ¬
 	{0, 26, INF, 124, INF, INF, INF, INF, INF, INF, INF, INF, INF, INF, INF},
 	{26, 0, 152, INF, 83, INF, 138, INF, INF, INF, INF, INF, INF, INF, INF},
 	{INF, 152, 0, INF, INF, INF, INF, 85, INF, INF, INF, INF, INF, INF, INF},
 	{124, INF, INF, 0, 66, INF, INF, INF, 37, INF, INF, INF, INF, INF, INF},
 	{INF, 83, INF, 66, 0, 37, INF, INF, INF, INF, INF, INF, INF, INF, INF},
-	{INF, INF	, INF, INF, 37, 0, 28, INF, INF, 25, INF, INF, INF, INF, INF},
-	{INF, 138	, INF, INF, INF, 28, 0, 195, INF, INF, 120, INF, INF, INF, INF},
+	{INF, INF, INF, INF, 37, 0, 28, INF, INF, 25, INF, INF, INF, INF, INF},
+	{INF, 138, INF, INF, INF, 28, 0, 195, INF, INF, 120, INF, INF, INF, INF},
 	{INF, INF, 85, INF, INF, INF, 195, 0, INF, INF, INF, 164, INF, INF, INF},
 	{INF, INF, INF, 37, INF, INF, INF, INF, 0, 34, INF, INF, 128, INF, INF},
 	{INF, INF, INF, INF, INF, 25, INF, INF, 34, 0, 137, INF, INF, 113, INF},
@@ -37,15 +37,15 @@ typedef struct {
 	int heap_size;
 } HeapType;
 
-int distance[MAX_VERTICES];				//½ÃÀÛ Á¤Á¡À¸·ÎºÎÅÍÀÇ ÃÖ´Ü °æ·Î °Å¸®
-int found[MAX_VERTICES];				//¹æ¹®ÇÑ Á¤Á¡ Ç¥½Ã
-int path[MAX_VERTICES][MAX_VERTICES];	//ÃÖ´Ü°Å¸® Á¤Á¡±îÁö °ÅÄ¡´Â ³ëµåµéÀ» ÀúÀå
-int check[MAX_VERTICES];				//ÇÑ Á¤Á¡À¸·Î °¡´Â Á¤Á¡À» Ç¥½Ã
+int distance[MAX_VERTICES];				//ì‹œì‘ ì •ì ìœ¼ë¡œë¶€í„°ì˜ ìµœë‹¨ ê²½ë¡œ ê±°ë¦¬
+int found[MAX_VERTICES];				//ë°©ë¬¸í•œ ì •ì  í‘œì‹œ
+int path[MAX_VERTICES][MAX_VERTICES];	//ìµœë‹¨ê±°ë¦¬ ì •ì ê¹Œì§€ ê±°ì¹˜ëŠ” ë…¸ë“œë“¤ì„ ì €ì¥
+int check[MAX_VERTICES];				//í•œ ì •ì ìœ¼ë¡œ ê°€ëŠ” ì •ì ì„ í‘œì‹œ
 
-void path_init(int path[][MAX_VERTICES]);		//path ÀÎÁ¢Çà·Ä ÃÊ±âÈ­
-int find_index(char* s, char* list[]);			//Áö¿ªÀÇ ÀÎµ¦½º ¹øÈ£ ¹İÈ¯ 
-int choose(int distance[],int n,int found[]);	// ÃÖ´Ü°Å¸®¿¡ ÀÖ´Â Á¤Á¡À» Ã£´Â ÇÔ¼ö
-void shortest_path(int start, int n);			//ÃÖ´Ü °æ·Î ¾Ë°í¸®Áò
+void path_init(int path[][MAX_VERTICES]);		//path ì¸ì ‘í–‰ë ¬ ì´ˆê¸°í™”
+int find_index(char* s, char* list[]);			//ì§€ì—­ì˜ ì¸ë±ìŠ¤ ë²ˆí˜¸ ë°˜í™˜ 
+int choose(int distance[],int n,int found[]);	// ìµœë‹¨ê±°ë¦¬ì— ìˆëŠ” ì •ì ì„ ì°¾ëŠ” í•¨ìˆ˜
+void shortest_path(int start, int n);			//ìµœë‹¨ ê²½ë¡œ ì•Œê³ ë¦¬ì¦˜
 HeapType* create();
 void init(HeapType* h);
 void insert_max_heap(HeapType* h, element item);
@@ -57,8 +57,8 @@ void main(){
 	char *start, *end, *start_copy, *end_copy;
 	path_init(path);
 	HeapType* heap;
-	heap = create();		// È÷ÇÁ »ı¼º
-	init(heap);				// ÃÊ±âÈ­
+	heap = create();		// íˆí”„ ìƒì„±
+	init(heap);				// ì´ˆê¸°í™”
 	element e;
 	element e_copy;
 	
@@ -80,12 +80,12 @@ void main(){
 		e_copy=delete_max_heap(heap);
 		start_copy=strtok(e_copy.route, "-");
 		end_copy=strtok(NULL, "-");
-		printf("Àå°Å¸®%dÀ§ °Ë»ö¾î: %s->%s\n", (i+1), start_copy, end_copy);
+		printf("ì¥ê±°ë¦¬%dìœ„ ê²€ìƒ‰ì–´: %s->%s\n", (i+1), start_copy, end_copy);
 	}
 	free(heap);
 }
 
-//path ÀÎÁ¢Çà·Ä ÃÊ±âÈ­
+//path ì¸ì ‘í–‰ë ¬ ì´ˆê¸°í™”
 void path_init(int path[][MAX_VERTICES]){
 	int i,j;
 	for(i=0;i<MAX_VERTICES;i++)
@@ -103,7 +103,7 @@ int find_index(char* s, char* list[]){
 	return index;
 }
 
-// ÃÖ´Ü°Å¸®¿¡ ÀÖ´Â Á¤Á¡À» Ã£´Â ÇÔ¼ö
+// ìµœë‹¨ê±°ë¦¬ì— ìˆëŠ” ì •ì ì„ ì°¾ëŠ” í•¨ìˆ˜
 int choose(int distance[],int n,int found[]){
 	int i,min,minpos;
 	min = INT_MAX;
@@ -118,17 +118,17 @@ int choose(int distance[],int n,int found[]){
 	return minpos;
 }
 
-//ÃÖ´Ü °æ·Î ¾Ë°í¸®Áò
+//ìµœë‹¨ ê²½ë¡œ ì•Œê³ ë¦¬ì¦˜
 void shortest_path(int start, int n) {
 	int i,j,u,w;
-	for(i=0; i<n; i++){//ÃÊ±âÈ­
+	for(i=0; i<n; i++){//ì´ˆê¸°í™”
 		distance[i] = weight[start][i];
 		found[i] = FALSE;
 		check[i]=1;
 		path[i][0] = start;
 	}
 
-	found[start] =TRUE;//½ÃÀÛ Á¤Á¡ ¹æ¹® Ç¥½Ã
+	found[start] =TRUE;//ì‹œì‘ ì •ì  ë°©ë¬¸ í‘œì‹œ
 	distance[start] = 0;
 	for(i=0; i<n-1; i++){
 		u = choose(distance, n, found);
@@ -136,14 +136,14 @@ void shortest_path(int start, int n) {
 		for(w=0; w<n;w++){
 			if(!found[w]){
 				if(distance[u]+weight[u][w] < distance[w]){
-					if(i==0){//Ã³À½¿¡´Â ÀÎÁ¢ÇÑ Á¤Á¡¿¡ ¿¬°á
-						path[w][check[w]] = u; //°»½ÅµÈ °æ·Î¸¦ °æ·Î ¹è¿­¿¡ ÀúÀå
+					if(i==0){//ì²˜ìŒì—ëŠ” ì¸ì ‘í•œ ì •ì ì— ì—°ê²°
+						path[w][check[w]] = u; //ê°±ì‹ ëœ ê²½ë¡œë¥¼ ê²½ë¡œ ë°°ì—´ì— ì €ì¥
 						check[w]++;
 					}
 					else{
-						for(j=0; j<(check[u]+1); j++){//ÀúÀåµÈ ¸¸Å­ ¹İº¹
-							path[w][j] = path[u][j]; //°æ·Î¸¦ °»½Å
-							path[w][j+1] = u; //³¡ºÎºĞ¿¡ ÀÚ±âÀÚ½ÅÀ» ÀúÀå
+						for(j=0; j<(check[u]+1); j++){//ì €ì¥ëœ ë§Œí¼ ë°˜ë³µ
+							path[w][j] = path[u][j]; //ê²½ë¡œë¥¼ ê°±ì‹ 
+							path[w][j+1] = u; //ëë¶€ë¶„ì— ìê¸°ìì‹ ì„ ì €ì¥
 							check[w]++;
 						}
 					}
@@ -155,28 +155,28 @@ void shortest_path(int start, int n) {
 	}
 }
 
-// »ı¼º ÇÔ¼ö
+// ìƒì„± í•¨ìˆ˜
 HeapType* create() {
 	return (HeapType*)malloc(sizeof(HeapType));
 }
 
-// ÃÊ±âÈ­ ÇÔ¼ö
+// ì´ˆê¸°í™” í•¨ìˆ˜
 void init(HeapType* h) {
 	h->heap_size = 0;
 }
 
-// ÇöÀç ¿ä¼ÒÀÇ °³¼ö°¡ heap_sizeÀÎ È÷ÇÁ h¿¡ itemÀ» »ğÀÔÇÑ´Ù.
-// »ğÀÔ ÇÔ¼ö
+// í˜„ì¬ ìš”ì†Œì˜ ê°œìˆ˜ê°€ heap_sizeì¸ íˆí”„ hì— itemì„ ì‚½ì…í•œë‹¤.
+// ì‚½ì… í•¨ìˆ˜
 void insert_max_heap(HeapType* h, element item) {
 	int i;
 	i = ++(h->heap_size);
 
-	//  Æ®¸®¸¦ °Å½½·¯ ¿Ã¶ó°¡¸é¼­ ºÎ¸ğ ³ëµå¿Í ºñ±³ÇÏ´Â °úÁ¤
+	//  íŠ¸ë¦¬ë¥¼ ê±°ìŠ¬ëŸ¬ ì˜¬ë¼ê°€ë©´ì„œ ë¶€ëª¨ ë…¸ë“œì™€ ë¹„êµí•˜ëŠ” ê³¼ì •
 	while ((i != 1) && (item.distance > h->heap[i / 2].distance)) {
 		h->heap[i] = h->heap[i / 2];
 		i /= 2;
 	}
-	h->heap[i] = item;     // »õ·Î¿î ³ëµå¸¦ »ğÀÔ
+	h->heap[i] = item;     // ìƒˆë¡œìš´ ë…¸ë“œë¥¼ ì‚½ì…
 }
 element delete_max_heap(HeapType* h){
 	int parent, child;
@@ -187,12 +187,12 @@ element delete_max_heap(HeapType* h){
 	parent = 1;
 	child = 2;
 	while (child <= h->heap_size) {
-		// ÇöÀç ³ëµåÀÇ ÀÚ½Ä³ëµå Áß ´õ ÀÛÀº ÀÚ½Ä³ëµå¸¦ Ã£´Â´Ù.
+		// í˜„ì¬ ë…¸ë“œì˜ ìì‹ë…¸ë“œ ì¤‘ ë” ì‘ì€ ìì‹ë…¸ë“œë¥¼ ì°¾ëŠ”ë‹¤.
 		if ((child < h->heap_size) &&
 			(h->heap[child].distance) < h->heap[child + 1].distance)
 			child++;
 		if (temp.distance >= h->heap[child].distance) break;
-		// ÇÑ ´Ü°è ¾Æ·¡·Î ÀÌµ¿
+		// í•œ ë‹¨ê³„ ì•„ë˜ë¡œ ì´ë™
 		h->heap[parent] = h->heap[child];
 		parent = child;
 		child *= 2;
