@@ -1,5 +1,3 @@
-//20190924¿ÁÁö¿ø 
-
 #include<stdio.h> 
 #define MAX_STRING  100 
 
@@ -27,7 +25,7 @@ void push(StackType *st,char ch)
 { 
 	if(full(st)) 
 	{ 
-		printf("½ºÅÃÀÌ ²ËÃ¡½À´Ï´Ù.\n"); 
+		printf("ìŠ¤íƒì´ ê½‰ì°¼ìŠµë‹ˆë‹¤.\n"); 
 	} 
 	else 
 	{ 
@@ -41,7 +39,7 @@ char pop(StackType *st)
 	int re = 0; 
 	if(empty(st)) 
 		{ 
-		printf("½ºÅÃÀÌ ºñ¾ú½À´Ï´Ù.\n"); 
+		printf("ìŠ¤íƒì´ ë¹„ì—ˆìŠµë‹ˆë‹¤.\n"); 
 		return 0; 
 		} 
 
@@ -53,9 +51,9 @@ char pop(StackType *st)
 
 int  palindrome(char str[]) 
 { 
-	StackType s; //¹è¿­À» »ç¿ëÇÒ °æ¿ì, ¿¬°á¸®½ºÆ®¸¦ »ç¿ëÇÏ¸é LinkedStackType s; 
-	int i;//ÇÊ¿äÇÑ º¯¼öµé ¼±¾ğ 
-	init(&s);//½ºÅÃ ÃÊ±âÈ­ 
+	StackType s; //ë°°ì—´ì„ ì‚¬ìš©í•  ê²½ìš°, ì—°ê²°ë¦¬ìŠ¤íŠ¸ë¥¼ ì‚¬ìš©í•˜ë©´ LinkedStackType s; 
+	int i;//í•„ìš”í•œ ë³€ìˆ˜ë“¤ ì„ ì–¸ 
+	init(&s);//ìŠ¤íƒ ì´ˆê¸°í™” 
 
 
 		
@@ -64,17 +62,17 @@ int  palindrome(char str[])
 	
 	for(i=0;i<len;i++){
 		ch=str[i];
-		if(ch==' '|| ch==',' || ch=="'") continue;	//ch°¡ ½ºÆäÀÌ½º°Å³ª ±¸µÎÁ¡ 
-		ch=tolower(ch);	//ch¸¦ ¼Ò¹®ÀÚ·Î º¯°æ 
-		push(&s, ch);	//½ºÅÃ¿¡ »ğÀÔÇÑ´Ù. 
+		if(ch==' '|| ch==',' || ch=="'") continue;	//chê°€ ìŠ¤í˜ì´ìŠ¤ê±°ë‚˜ êµ¬ë‘ì  
+		ch=tolower(ch);	//chë¥¼ ì†Œë¬¸ìë¡œ ë³€ê²½ 
+		push(&s, ch);	//ìŠ¤íƒì— ì‚½ì…í•œë‹¤. 
 	}
 	
 	for(i=0;i<len;i++){
 		ch=str[i];
 		if (ch==' '|| ch==',' || ch=="'") continue;
 		ch=tolower(ch);
-		chs=pop(&s);	//½ºÅÃ¿¡¼­ ¹®ÀÚ¸¦ ²¨³½´Ù. 
-		if (ch!=chs) return 0;	//½ÇÆĞ 
+		chs=pop(&s);	//ìŠ¤íƒì—ì„œ ë¬¸ìë¥¼ êº¼ë‚¸ë‹¤. 
+		if (ch!=chs) return 0;	//ì‹¤íŒ¨ 
 	}
 	return 1;
 } 
@@ -83,12 +81,12 @@ int main(void)
 
 { 
 	char word[MAX_STRING]; 
-	printf("¹®ÀÚ¿­À» ÀÔ·ÂÇÏ½Ã¿À: "); 
+	printf("ë¬¸ìì—´ì„ ì…ë ¥í•˜ì‹œì˜¤: "); 
 	scanf("%s", word); 
 	if (palindrome(word)) 
-		printf("È¸¹®ÀÔ´Ï´Ù.\n"); 
+		printf("íšŒë¬¸ì…ë‹ˆë‹¤.\n"); 
 	else 
-		printf("È¸¹®ÀÌ ¾Æ´Õ´Ï´Ù.\n"); 
+		printf("íšŒë¬¸ì´ ì•„ë‹™ë‹ˆë‹¤.\n"); 
 
 	return 0; 
 } 
