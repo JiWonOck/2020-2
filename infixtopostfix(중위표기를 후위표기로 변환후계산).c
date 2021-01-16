@@ -1,5 +1,3 @@
-//20190924¿ÁÁö¿ø 
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,54 +6,54 @@
 int stack[MAX];
 int stack_top;
 
-//½ºÅÃÃÊ±âÈ­ÇÔ¼ö 
+//ìŠ¤íƒì´ˆê¸°í™”í•¨ìˆ˜ 
 void init_stack(void)
 {
     stack_top = -1;
 }
 
-//Æ÷È­»óÅÂ °Ë»ç 
+//í¬í™”ìƒíƒœ ê²€ì‚¬ 
 int get_stack_top(void)
 {
     return (stack_top < 0) ? -1 : stack[stack_top];
 }
 
 
-//°ø¹é»óÅÂ °Ë»ç 
+//ê³µë°±ìƒíƒœ ê²€ì‚¬ 
 int is_stack_empty(void)
 {
     return (stack_top < 0);
 }
 
 
-//»ğÀÔÇÔ¼ö 
+//ì‚½ì…í•¨ìˆ˜ 
 int push(int t)
 {
     if (stack_top >= MAX - 1)
         {
-        printf("½ºÅÃ Æ÷È­ ¿¡·¯\n");
+        printf("ìŠ¤íƒ í¬í™” ì—ëŸ¬\n");
         exit(1);
         }
     stack[++stack_top] = t;
     return t;
 }
 
-//»èÁ¦ÇÔ¼ö 
+//ì‚­ì œí•¨ìˆ˜ 
 int pop(void)
 {
     if (stack_top < 0)
         {
-        printf("½ºÅÃ °ø¹é ¿¡·¯\n");
+        printf("ìŠ¤íƒ ê³µë°± ì—ëŸ¬\n");
         exit(1);
         }
     return stack[stack_top--];
 }
 
-// ÇÇÅ©ÇÔ¼ö
+// í”¼í¬í•¨ìˆ˜
 int peek(void)
 {
 	if (stack_top < 0) {
-		printf("½ºÅÃ °ø¹é ¿¡·¯\n");
+		printf("ìŠ¤íƒ ê³µë°± ì—ëŸ¬\n");
 		exit(1);
 	}
 	return stack[stack_top];
@@ -63,14 +61,14 @@ int peek(void)
 
 
 
-//¿¬»êÀÚÀÎÁö È®ÀÎ 
+//ì—°ì‚°ìì¸ì§€ í™•ì¸ 
 int is_operator(int op)
 {
     return (op == '+' || op == '-' || op == '*' || op == '/');
 }
 
  
-//¿¬»êÀÚ ¿ì¼±¼øÀ§ ¹İÈ¯ 
+//ì—°ì‚°ì ìš°ì„ ìˆœìœ„ ë°˜í™˜ 
 int precedence(int op)
 {
     if (op == '(') return 0;
@@ -79,10 +77,10 @@ int precedence(int op)
     else return 3;
 }
 
-// ÁßÀ§ Ç¥±â ¼ö½Ä -> ÈÄÀ§ Ç¥±â ¼ö½Ä 
+// ì¤‘ìœ„ í‘œê¸° ìˆ˜ì‹ -> í›„ìœ„ í‘œê¸° ìˆ˜ì‹ 
 void postfix(char *dst, char *src) 
 {
-    init_stack();		// ½ºÅÃ ÃÊ±âÈ­ 
+    init_stack();		// ìŠ¤íƒ ì´ˆê¸°í™” 
     while (*src)
         {
         if (*src == '(')
@@ -92,7 +90,7 @@ void postfix(char *dst, char *src)
             }
         else if (*src == ')') 
             {
-            while (get_stack_top() != '(')	// ¿ŞÂÊ °ıÈ£¸¦ ¸¸³¯¶§±îÁö Ãâ·Â
+            while (get_stack_top() != '(')	// ì™¼ìª½ ê´„í˜¸ë¥¼ ë§Œë‚ ë•Œê¹Œì§€ ì¶œë ¥
                 {
                 *dst++ = pop();
                 *dst++ =' ';
@@ -100,17 +98,17 @@ void postfix(char *dst, char *src)
         	pop();
         	src++;
         	}
-        else if (is_operator(*src))    //¿¬»êÀÚ¶ó¸é 
+        else if (is_operator(*src))    //ì—°ì‚°ìë¼ë©´ 
             {
             while (!is_stack_empty() && precedence(get_stack_top()) >= precedence(*src))
-                {                       //¿ì¼±¼øÀ§³ôÀº°ÍºÎÅÍ 
+                {                       //ìš°ì„ ìˆœìœ„ë†’ì€ê²ƒë¶€í„° 
                 *dst++ = pop();
                 *dst++ =' ';
                 }
             push(*src);
             src++;
         	}
-        else if (*src >= '0' && *src <= '9')    //ÇÇ¿¬»êÀÚ¶ó¸é
+        else if (*src >= '0' && *src <= '9')    //í”¼ì—°ì‚°ìë¼ë©´
         	{
             do
             	{
@@ -121,7 +119,7 @@ void postfix(char *dst, char *src)
         else
             src++;
         }
-    while (!is_stack_empty())   // ½ºÅÃ¿¡ ÀúÀåµÈ ¿¬»êÀÚµé Ãâ·Â
+    while (!is_stack_empty())   // ìŠ¤íƒì— ì €ì¥ëœ ì—°ì‚°ìë“¤ ì¶œë ¥
         {
         *dst++ = pop();
         *dst++ =' ';
@@ -131,14 +129,14 @@ void postfix(char *dst, char *src)
 }
 
  
-//ÈÄÀ§Ç¥±â¹ı °è»ê 
+//í›„ìœ„í‘œê¸°ë²• ê³„ì‚° 
 int eval(char *post)
 {
     int i;
     init_stack();
     while (*post)
         {
-        if (*post >= '0' && *post <= '9')     //ÇÇ¿¬»êÀÚ¶ó¸é
+        if (*post >= '0' && *post <= '9')     //í”¼ì—°ì‚°ìë¼ë©´
             {
             i = 0;
             do
@@ -148,7 +146,7 @@ int eval(char *post)
                 } while (*post >= '0' && *post <= '9');
             push(i);
             }
-        else if (*post == '+')     //¿¬»êÀÚ¶ó¸é 
+        else if (*post == '+')     //ì—°ì‚°ìë¼ë©´ 
             {
             push(pop() + pop());
             post++;
@@ -183,13 +181,13 @@ int main()
     int result;
     char exp[256], infix[256];
       
-    printf("¼ö½ÄÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");          
+    printf("ìˆ˜ì‹ì„ ì…ë ¥í•˜ì„¸ìš”: ");          
     scanf("%s", &infix);
     
     postfix(exp, infix);
 
     result = eval(exp);   
-    printf("°á°ú : %d", result);
+    printf("ê²°ê³¼ : %d", result);
         
     return 0;
 }
