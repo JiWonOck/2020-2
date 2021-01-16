@@ -191,11 +191,3 @@ int main()
         
     return 0;
 }
-
-/*
-    if(scanf("%s", &infix)==EOF)
-        {
-        printf("\n");
-        exit(0);
-        }
-        */
