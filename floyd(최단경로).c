@@ -1,13 +1,14 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #define TRUE 1
 #define FALSE 0
 #define MAX_VERTICES	100	
-#define INF	1000000	/* ¹«ÇÑ´ë (¿¬°áÀÌ ¾ø´Â °æ¿ì) */
+#define INF	1000000	/* ë¬´í•œëŒ€ (ì—°ê²°ì´ ì—†ëŠ” ê²½ìš°) */
 
 typedef struct GraphType {
-	int n;	// Á¤Á¡ÀÇ °³¼ö
+	int n;	// ì •ì ì˜ ê°œìˆ˜
 	int weight[MAX_VERTICES][MAX_VERTICES];
 } GraphType;
 
